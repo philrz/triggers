@@ -1,0 +1,17 @@
+name: Make a branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  makeit:
+  runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        path: trigger
+    - uses: peterjgrainger/action-create-branch@v2.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        branch: 'rc-v0.1'
