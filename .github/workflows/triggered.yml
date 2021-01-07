@@ -1,0 +1,12 @@
+name: Do something triggered by branch creation
+
+on:
+  push:
+    branches:
+      - rc-v*
+
+jobs:
+  sayhello:
+    runs-on: ubuntu-18.04
+    steps:
+    - run: echo hello
