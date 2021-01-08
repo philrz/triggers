@@ -9,4 +9,4 @@ jobs:
   sayhello:
     runs-on: ubuntu-18.04
     steps:
-    - run echo hello
+    - run: echo hello
