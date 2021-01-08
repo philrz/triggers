@@ -1,0 +1,12 @@
+name: Cron style 3
+
+on:
+  schedule:
+    - cron:  '*/7 * * * *'
+  workflow_dispatch:
+
+jobs:
+  sayhello3:
+    runs-on: ubuntu-18.04
+    steps:
+    - run: echo hello3
