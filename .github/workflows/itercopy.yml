@@ -1,0 +1,22 @@
+name: Iterate through multiple files to create links
+
+on:
+  workflow_dispatch:
+
+jobs:
+  itercopy:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Make some files for us to iterate through
+      run: |
+        mkdir -p dist/installers/brim_amd64.deb
+        mkdir -p dist/installers/brim_x86_64.rpm
+    - name: Pretend we have a bucket path
+      run: echo "BUCKET_PATH=gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/itercopy/linux" >> $GITHUB_ENV
+    - name: Set publicly-available bucket path
+      run: echo "PUBLIC_BUCKET_PATH=${BUCKET_PATH/gs:\/\//https://storage.googleapis.com/}" >> $GITHUB_ENV
+    - name: Iterate through files
+      run: |
+        SLACK_TEXT="New Linux release available -"
+        for FILENAME in $(find dist/installers -type f -exec basename {} \;); do SLACK_TEXT="${SLACK_TEXT}\n<${{ env.PUBLIC_BUCKET_PATH }}/$FILENAME|${{ env.BUCKET_PATH }}/$FILENAME>"
