@@ -10,8 +10,9 @@ jobs:
     - uses: actions/checkout@v2
     - name: Make some files for us to iterate through
       run: |
-        mkdir -p dist/installers/brim_amd64.deb
-        mkdir -p dist/installers/brim_x86_64.rpm
+        mkdir -p dist/installers
+        touch dist/installers/brim_amd64.deb
+        touch dist/installers/brim_x86_64.rpm
     - name: Pretend we have a bucket path
       run: echo "BUCKET_PATH=gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/itercopy/linux" >> $GITHUB_ENV
     - name: Set publicly-available bucket path
