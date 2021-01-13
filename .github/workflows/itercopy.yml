@@ -20,7 +20,7 @@ jobs:
       run: |
         SLACK_TEXT="New Linux release available -"
         for FILENAME in $(find dist/installers -type f -exec basename {} \;); do SLACK_TEXT="${SLACK_TEXT}\n<${{ env.PUBLIC_BUCKET_PATH }}/$FILENAME|${{ env.BUCKET_PATH }}/$FILENAME>"; done
-        echo SLACK_TEXT="$SLACK_TEXT" >> $GITHUB_ENV
+        echo "SLACK_TEXT=\"$SLACK_TEXT\"" >> $GITHUB_ENV
     - name: Inform Slack users
       uses: tiloio/slack-webhook-action@v1.1.2
       with:
