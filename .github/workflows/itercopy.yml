@@ -21,7 +21,7 @@ jobs:
       run: |
         echo "SLACK_TEXT<<EOF" >> $GITHUB_ENV
         echo "New Linux release available -" >> $GITHUB_ENV
-        for FILENAME in $(find dist/installers -type f -exec basename {} \;); do echo"\n<${{ env.PUBLIC_BUCKET_PATH }}/$FILENAME|${{ env.BUCKET_PATH }}/$FILENAME>" >> $GITHUB_ENV; done
+        for FILENAME in $(find dist/installers -type f -exec basename {} \;); do echo "\n<${{ env.PUBLIC_BUCKET_PATH }}/$FILENAME|${{ env.BUCKET_PATH }}/$FILENAME>" >> $GITHUB_ENV; done
         echo "EOF" >> $GITHUB_ENV
     - name: Inform Slack users
       uses: tiloio/slack-webhook-action@v1.1.2
