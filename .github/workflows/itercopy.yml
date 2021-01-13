@@ -18,15 +18,15 @@ jobs:
       run: echo "PUBLIC_BUCKET_PATH=${BUCKET_PATH/gs:\/\//https://storage.googleapis.com/}" >> $GITHUB_ENV
     - name: Iterate through files
       run: |
-        SLACK_TEXT="New Linux release available -"
-        for FILENAME in $(find dist/installers -type f -exec basename {} \;); do SLACK_TEXT="${SLACK_TEXT}\n<${{ env.PUBLIC_BUCKET_PATH }}/$FILENAME|${{ env.BUCKET_PATH }}/$FILENAME>"; done
-        echo "SLACK_TEXT=\"$SLACK_TEXT\"" >> $GITHUB_ENV
+        echo "SLACK_TEXT<<EOF" >> $GITHUB_ENV
+        echo "New Linux release available -" >> $GITHUB_ENV
+        for FILENAME in $(find dist/installers -type f -exec basename {} \;); do echo"\n<${{ env.PUBLIC_BUCKET_PATH }}/$FILENAME|${{ env.BUCKET_PATH }}/$FILENAME>" >> $GITHUB_ENV; done
     - name: Inform Slack users
       uses: tiloio/slack-webhook-action@v1.1.2
       with:
         slack_web_hook_url: ${{ secrets.SLACK_WEBHOOK_BRIMLABS_RELEASES }}
         slack_json: '{
                        "username": "release-automation",
-                       "text": "$SLACK_TEXT"
+                       "text": "${{ env.SLACK_TEXT }}"
                      }'
 
